@@ -1,18 +1,14 @@
---HighKey reccomend to watcht the video on this incase you dont understand what I wrote in comments
---also in the video he leaves some things unexplained
 --API for the profile service library: https://madstudioroblox.github.io/ProfileService/ 
 
--- VERY IMPORTANT - USE "TEST" for data store when testing the game and "PRODUCTION" for when we publish it
--- THIS IS SO WE DONT MESS WITH PEOPLES DATA.
---IMPORTANT NOTE - Data will not save currently because we have to enable studio access to API Services
---In order to do this we first have to publish our game(I think, that is what I looked up anyways)
---IMPORTANT NOTE #2 - IF WE WANT NEW VARIABLES TO SAVE ADD THE VARIABLE IN TEMPLATE
---IMPORTANT NOTE #3 - DO NOT EDIT THIS CODE EXPECT FOR CREATING LEADERSTATS
+--IMPORTANT NOTE #1 - USE "TEST" for data store when testing the game and "PRODUCTION" for when we publish it THIS IS SO WE DONT MESS WITH PEOPLES DATA.
+--IMPORTANT NOTE #2 - IF WE WANT NEW VARIABLES TO SAVE THROUGH SERVER SESSIONS ADD THE VARIABLE IN TEMPLATE
+--IMPORTANT NOTE #3 - DO NOT EDIT THIS CODE EXCEPT FOR CREATING LEADERSTATS
 
 
 --What this script does
 --Detects Whenever a Player joins or leaves a game
 --Script will load or unload their data respectively
+--includes basic session locking capabilities to prevent duplication and loss of data.
 
 --Variable refrences to services so that code doesnt get long and messy trying to call from the services that we are using
 local Players = game:GetService("Players")
