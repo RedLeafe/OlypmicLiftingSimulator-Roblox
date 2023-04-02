@@ -1,9 +1,9 @@
 local ServerScriptService = game:GetService("ServerScriptService")
 local ServerScriptService = game:GetService("ServerScriptService")
 
-local Pets = require(ServerScriptService.Pets)
+local PetManager = require(ServerScriptService.PetManager)
 
 return function (context, player: Player, pet : string)
-    local petInstance = Pets.CreatePet(pet)
-    return Pets.GivePet(player,petInstance)
+    local petInstance = PetManager.CreatePet(pet)
+    return PetManager.GivePet(player,petInstance)
 end
