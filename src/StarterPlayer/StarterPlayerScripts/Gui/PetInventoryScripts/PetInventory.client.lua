@@ -33,6 +33,7 @@ local INFO_MULTIPLIER_STRING = "Multiplier : AMOUNT"
 local EQUIP_BUTTON_COLOR = Color3.fromRGB(127, 206, 115)
 local UNEQUIP_BUTTON_COLOR = Color3.fromRGB(255, 98, 101)
 
+
 local selectedPet: string?
 
 local function UpdateInfo(uuid :string)
