@@ -51,7 +51,7 @@ local function UpdateInfo(uuid :string)
     Info.PetName.Text = pet.Name
     
     local model = ReplicatedStorage.Pets:FindFirstChild(pet.Model)
-    print(model)
+    --print(model)
     ViewportModel.CleanViewport(Info.ViewportFrame)
     --ViewportModel.GenerateViewPort(Info.ViewportFrame, model:Clone(), CFrame.Angles(0, math.rad(-90), 0))
         
