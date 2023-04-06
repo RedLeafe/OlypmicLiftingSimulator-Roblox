@@ -28,7 +28,7 @@ local PetTemplate = Container.Template
 
 local Exit = Frame.Exit
 
-local INFO_MULTIPLIER_STRING = "Multiplier : AMOUNT"
+local INFO_MULTIPLIER_STRING = "Multiplier : AMOUNTX"
 
 local WARNING_SUBTITLE_STRING = "Are you sure you want to delete AMOUNT pets?"
 
@@ -56,7 +56,7 @@ local function UpdateInfo(uuid :string)
     ViewportModel.GenerateViewPort(Info.ViewportFrame, model:Clone(), CFrame.Angles(0, math.rad(-90), 0))
         
     local multiplierStat = PetsConfig.GetPetMultiplier(pet)
-    Info.Stats.PetMultiplierText = INFO_MULTIPLIER_STRING:gsub("AMOUNT", FormatNumber.FormatCompact(multiplierStat))
+    Info.Stats.PetMultiplierText.Text = INFO_MULTIPLIER_STRING:gsub("AMOUNT", FormatNumber.FormatCompact(multiplierStat))
     
 end
 
@@ -68,7 +68,7 @@ local function GeneratePet(pet : PetsConfig.PetInstance)
 
     clone.PetName.Text = pet.Name
     clone.Equipped.Visible = pet.Equipped
-    clone.Multiplier.Text = FormatNumber.FormatCompact(PetsConfig.GetPetMultiplier(pet))
+    clone.Multiplier.Text = FormatNumber.FormatCompact(PetsConfig.GetPetMultiplier(pet)).."X"
 
     local model = ReplicatedStorage.Pets:FindFirstChild(pet.Model)
     ViewportModel.GenerateViewport(clone.ViewportFrame, model:Clone(), CFrame.Angles(0, math.rad(-90), 0))
