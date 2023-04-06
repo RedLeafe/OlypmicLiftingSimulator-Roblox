@@ -51,9 +51,9 @@ local function UpdateInfo(uuid :string)
     Info.PetName.Text = pet.Name
     
     local model = ReplicatedStorage.Pets:FindFirstChild(pet.Model)
-    --print(model)
+    print(model)
     ViewportModel.CleanViewport(Info.ViewportFrame)
-    --ViewportModel.GenerateViewPort(Info.ViewportFrame, model:Clone(), CFrame.Angles(0, math.rad(-90), 0))
+    ViewportModel.GenerateViewport(Info.ViewportFrame, model:Clone(), CFrame.Angles(0, math.rad(-90), 0))
         
     local multiplierStat = PetsConfig.GetPetMultiplier(pet)
     Info.Stats.PetMultiplierText.Text = INFO_MULTIPLIER_STRING:gsub("AMOUNT", FormatNumber.FormatCompact(multiplierStat))
