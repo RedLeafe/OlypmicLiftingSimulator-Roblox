@@ -57,7 +57,7 @@ function PetsConfig.GetPetMultiplier(pet : PetInstance)
     local config = PetsConfig.GetConfig(pet)
     local Multiplier = 1.5
     if config then 
-        local Multiplier = config.Multiplier
+        Multiplier = config.Multiplier
     end
     return Multiplier
 end
