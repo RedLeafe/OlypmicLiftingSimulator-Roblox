@@ -61,6 +61,32 @@ function PetManager.EquipPet(player : Player, uuid: string)
     Remotes.EquipPet:FireClient(player, uuid)
 end
 
+function PetManager.EquipBestPets(player :Player, uuid: string)
+    local profile = PlayerData.Profiles[player]
+    if not profile then return "no profile found!" end
+
+    local pets = {}
+    for uuid, pet:PetsConfig.PetInstance in profile.Data.Pets do
+        local petInfo = {
+            UUID = pet.UUID,
+            Multiplier = PetsConfig.GetPetMultiplier(pet)
+        }
+        table.insert(pets,petInfo)
+    end
+    table.sort(pets,function(a,b)
+        return a.Multiplier > b.Multiplier
+    end)
+
+    PetManager.UnequipAllPets(player)
+
+    local maxEquippedPets = PetsConfig.GetMaxedEquippedPets(profile.Data)
+    local total = if #pets < maxEquippedPets then #pets else maxEquippedPets
+    for i = 1, total, 1 do
+        local uuid = pets[i].UUID
+        PetManager.EquipPet(player,uuid)
+    end
+end
+
 function PetManager.UnequipPet(player : Player, uuid: string)
     local profile = PlayerData.Profiles[player]
     if not profile then return "no profile found!" end
@@ -77,6 +103,18 @@ function PetManager.UnequipPet(player : Player, uuid: string)
     Remotes.UnequipPet:FireClient(player, uuid)
 end
 
+function PetManager.UnequipAllPets(player :Player)
+    local profile = PlayerData.Profiles[player]
+    if not profile then return "No profile found!" end
+    
+    local equippedPets = PetsConfig.GetEquippedPets(profile.Data)
+    for _, pet in equippedPets do
+        PetManager.UnequipPet(player, pet.UUID)
+    end
+
+
+end
+
 function  PetManager.CreatePet(pet : string) : PetsConfig.PetInstance
     return {
         UUID = HttpService:GenerateGUID(false),
@@ -91,10 +129,13 @@ function  PetManager.CreatePet(pet : string) : PetsConfig.PetInstance
     
 end
 
+
 Remotes.DeletePets.OnServerEvent:Connect(PetManager.DeletePets)
 Remotes.DeletePet.OnServerEvent:Connect(PetManager.DeletePet)
 Remotes.EquipPet.OnServerEvent:Connect(PetManager.EquipPet)
+Remotes.EquipBestPets.OnServerEvent:Connect(PetManager.EquipBestPets)
 Remotes.UnequipPet.OnServerEvent:Connect(PetManager.UnequipPet)
+Remotes.UnequipAllPets.OnServerEvent:Connect(PetManager.UnequipAllPets)
 
 
 return PetManager

@@ -55,8 +55,10 @@ end
 --returns the multiplier of a specific pet
 function PetsConfig.GetPetMultiplier(pet : PetInstance)
     local config = PetsConfig.GetConfig(pet)
-    local Multiplier = config.Multiplier
-
+    local Multiplier = 1.5
+    if config then 
+        local Multiplier = config.Multiplier
+    end
     return Multiplier
 end
 
