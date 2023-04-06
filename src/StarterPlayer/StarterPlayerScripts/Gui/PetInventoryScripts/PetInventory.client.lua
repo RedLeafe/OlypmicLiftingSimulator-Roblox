@@ -210,9 +210,6 @@ HolderButtons.TrashMode.MouseButton1Click:Connect(function()
     if isSelecting then
         if #selectedPets == 0 then
             SelectMode(false)
-        else
-            --WarningFrame.Subtitle.Text = WARNING_SUBTITLE_STRING:gsub("AMOUNT", FormatNumber.FormatCompact(#selectedPets))
-            WarningFrame.Visible = true
         end
     else
         SelectMode(true)
