@@ -188,12 +188,13 @@ end)
 
 HolderButtons.Delete.MouseButton1Click:Connect(function()
     if isSelecting then
-        WarningFrame.Subtitle.Text = WARNING_SUBTITLE_STRING:gsub("AMOUNT", FormatNumber.FormatCompact(#selectedPets))
+        WarningFrame.ConfirmationText.Text = WARNING_SUBTITLE_STRING:gsub("AMOUNT", FormatNumber.FormatCompact(#selectedPets))
         WarningFrame.Visible = true
-    end
-    if not selectedPet then return end
+    else
+        if not selectedPet then return end
 
-    Remotes.DeletePet:FireServer(selectedPet)
+        Remotes.DeletePet:FireServer(selectedPet)
+    end
 end)
 
 HolderButtons.UnequipAll.MouseButton1Click:Connect(function()
@@ -208,9 +209,7 @@ end)
 
 HolderButtons.TrashMode.MouseButton1Click:Connect(function()
     if isSelecting then
-        if #selectedPets == 0 then
-            SelectMode(false)
-        end
+        SelectMode(false)
     else
         SelectMode(true)
     end
