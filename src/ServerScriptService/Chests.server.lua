@@ -16,10 +16,10 @@ local function CollectChest(player: Player, chest: Model)
     if not profile then return end
 
     local area = chest.Parent.Name
-    local isAreaUnlocked = AreasConfig.IsAreaUnlocked(profile.Data, area)
+    local isAreaUnlocked = AreasConfig.IsAreaUnlocked(profile.Data, (area.."Gate"))
     if not isAreaUnlocked then return end
 
-    local playerCooldown = profile.Data.Chests[area]
+    local playerCooldown = profile.Data.Chest[area]
     if playerCooldown and playerCooldown > os.time() then return end
 
     local cooldown = chest:GetAttribute("cooldown")
@@ -32,8 +32,8 @@ local function CollectChest(player: Player, chest: Model)
         PlayerData.AdjustGems(player, reward)
     end
 
-    profile.Data.Chests[area] = os.time() + cooldown
-    Remotes.UpdateChest:FireClient(player, area, profile.Data.Chests[area])
+    profile.Data.Chest[area] = os.time() + cooldown
+    Remotes.UpdateChest:FireClient(player, area, profile.Data.Chest[area])
     debounce[player] = true
     task.delay(0.5, function()
         debounce[player] = nil
