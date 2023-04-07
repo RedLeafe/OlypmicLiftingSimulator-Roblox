@@ -40,10 +40,6 @@ function StateManager.GetData(): Template.PlayerData
 	return PlayerData
 end
 
-Remotes.UpdateChest.OnClientEvent:Connect(function(area: string, cooldown: number)
-	PlayerData.Chests[area] = cooldown
-end)
-
 --[[
 	So we could update data using remotes so evertime an updateRemote from serverside fires a client it would update our client state data
 	the other way of doing this is everytime data is requested through stateManager we wipe all data in client and then ask the server for the up to date version of the data.

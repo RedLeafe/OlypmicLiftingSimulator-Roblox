@@ -18,7 +18,7 @@ local function CollectChest(player: Player, chest: Model)
     local area = chest.Parent.Name
     local isAreaUnlocked = AreasConfig.IsAreaUnlocked(profile.Data, (area.."Gate"))
     if not isAreaUnlocked then return end
-
+    
     local playerCooldown = profile.Data.Chest[area]
     if playerCooldown and playerCooldown > os.time() then return end
 
