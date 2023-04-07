@@ -24,7 +24,9 @@ local function UpdateData()
 	PlayerData = nil
 	while not PlayerData do
 		PlayerData = Remotes.GetAllData:InvokeServer()
-		task.wait(0.1)
+		if PlayerData == nil then
+			task.wait(0.1)
+		end
 	end
 end
 
@@ -38,8 +40,27 @@ function StateManager.GetData(): Template.PlayerData
 	return PlayerData
 end
 
-Remotes.UpdateChest.OnClientEvent:Connect(function(area: string, cooldown: number))
+Remotes.UpdateChest.OnClientEvent:Connect(function(area: string, cooldown: number)
 	PlayerData.Chests[area] = cooldown
 end)
+
+--[[
+	So we could update data using remotes so evertime an updateRemote from serverside fires a client it would update our client state data
+	the other way of doing this is everytime data is requested through stateManager we wipe all data in client and then ask the server for the up to date version of the data.
+	
+Remotes.UpdateStrength.OnClientEvent:Connect(function(amount)
+	PlayerData.Strength = amount
+end)
+
+Remotes.UpdateGems.OnClientEvent:Connect(function(amount)
+	PlayerData.Gems = amount
+end)
+
+
+Remotes.UpdateRebirths.OnClientEvent:Connect(function(amount)
+	PlayerData.Rebirths = amount
+end)
+
+]]
 
 return StateManager
