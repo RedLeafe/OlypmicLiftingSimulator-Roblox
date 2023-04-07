@@ -1,11 +1,13 @@
-local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
+local Players = game:GetService("Players")
 
 local Remotes = ReplicatedStorage.Remotes
 local PlayerData = require(ServerScriptService.PlayerData.Manager)
 local AreasConfig = require(ReplicatedStorage.Configs.AreasConfig)
+
+local debounce = {}
 
 local function CollectChest(player: Player, chest: Model)
     if debounce[player] then return end
@@ -26,7 +28,7 @@ local function CollectChest(player: Player, chest: Model)
 
     if currency == "Strength" then
         PlayerData.AdjustStrengthNoMult(player, reward)
-    else if currency == "Gems" then
+    elseif currency == "Gems" then
         PlayerData.AdjustGems(player, reward)
     end
 
@@ -45,9 +47,10 @@ local function CreateChestListener()
         local touchPart = descendant.Hitbox
         touchPart.Touched:Connect(function(otherPart)
             local player = Players:GetPlayerFromCharacter(otherPart.Parent)
+            if player then
                 CollectChest(player, descendant)
-            end)
-        end
+            end
+        end)
     end
 end
 

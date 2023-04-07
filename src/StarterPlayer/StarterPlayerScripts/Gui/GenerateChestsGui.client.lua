@@ -34,7 +34,7 @@ local function GenerateGuis()
 end
 
 local function UpdateGui(area: string)
-    local playerCooldown = StateManager.GetData.Chests[area]
+    local playerCooldown = StateManager.GetData().Chest[area]
     local gui = Gui[area]
 
     if playerCooldown and playerCooldown > os.time() then
