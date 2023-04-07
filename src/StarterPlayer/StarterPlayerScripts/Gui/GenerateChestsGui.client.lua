@@ -42,7 +42,7 @@ local function UpdateGui(area: string)
         gui.Subtitle.Text = FormatTime.convertToHMS(playerCooldown - os.time())
     else
         local currency = gui:GetAttribute("currency")
-        gui.Title.Text = UnclaimedTitle:gsub("currency", currency)
+        gui.Title.Text = UnclaimedTitle:gsub("CURRENCY", currency)
         gui.Subtitle.Text = UnclaimedSubtitle
     end
 end
