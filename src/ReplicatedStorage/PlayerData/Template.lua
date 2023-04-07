@@ -18,7 +18,8 @@ local Template = {
 	Auto = {
 		Active = false
 	},
-	Areas = defaultAreas
+	Areas = defaultAreas,
+	Chest = { }
 }
 
 export type PlayerData = typeof(Template)

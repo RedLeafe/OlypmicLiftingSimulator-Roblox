@@ -38,4 +38,8 @@ function StateManager.GetData(): Template.PlayerData
 	return PlayerData
 end
 
+Remotes.UpdateChest.OnClientEvent:Connect(function(area: string, cooldown: number))
+	PlayerData.Chests[area] = cooldown
+end)
+
 return StateManager
