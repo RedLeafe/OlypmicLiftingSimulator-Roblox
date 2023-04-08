@@ -34,7 +34,7 @@ function Manager.AdjustStrengthNoMult(player: Player, amount: number)
 	profile.Data.Strength += amount
 	player.leaderstats.Strength.Value = profile.Data.Strength
 	Remotes.UpdateStrength:FireClient(player, profile.Data.Strength)
-	--Remotes.UpdateStrPopup:FireClient(player, amount)
+	Remotes.UpdateStrPopup:FireClient(player, amount)
 
 end
 
