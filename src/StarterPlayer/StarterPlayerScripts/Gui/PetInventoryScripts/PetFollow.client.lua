@@ -8,6 +8,8 @@ local PetsConfig = require(ReplicatedStorage.Configs.PetsConfig)
 local StateManager = require(ReplicatedStorage.Client.StateManager)
 local Remotes = ReplicatedStorage.Remotes.PetRemotes
 
+local GuiTemplate = ReplicatedStorage.PetNameGUI
+
 -- hash table with player User Id has a key
 local EquippedPets: { [string] : { [string] : PetsConfig.PetInstance} } = {}
 
@@ -116,6 +118,11 @@ local function PetFollow(player : Player, pet: PetsConfig.PetInstance)
     end)
 
     upTween:Play()
+
+    local gui = GuiTemplate:Clone()
+    gui.Parent = petModel.PrimaryPart
+    gui.Frame.PetName.Text = pet.Name
+    gui.Frame.Rarity.Text = pet.Rarity
 end
 
 local function PetStopFollow(player : Player, uuid : string)
