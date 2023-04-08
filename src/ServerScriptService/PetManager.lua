@@ -1,5 +1,7 @@
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
+local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 
 local PetsConfig = require(ReplicatedStorage.Configs.PetsConfig)
@@ -30,6 +32,10 @@ function PetManager.DeletePet(player : Player, uuid : string)
 
     if not pet then return "no pet found!" end
 
+    if pet.Equipped then
+        PetManager.UnequipPet(player, uuid)
+    end
+
     profile.Data.Pets[uuid] = nil
     Remotes.DeletePet:FireClient(player, uuid)
 
@@ -59,6 +65,10 @@ function PetManager.EquipPet(player : Player, uuid: string)
 
     pet.Equipped = true
     Remotes.EquipPet:FireClient(player, uuid)
+    for _, loopPlayer in Players:GetPlayers() do
+        if player == loopPlayer then continue end
+        Remotes.ReplicateEquipPet:FireClient(loopPlayer, player, pet)
+    end
 end
 
 function PetManager.EquipBestPets(player :Player, uuid: string)
@@ -101,6 +111,10 @@ function PetManager.UnequipPet(player : Player, uuid: string)
 
     pet.Equipped = false
     Remotes.UnequipPet:FireClient(player, uuid)
+    for _, loopPlayer in Players:GetPlayers() do
+        if player == loopPlayer then continue end
+        Remotes.ReplicateUnequipPet:FireClient(loopPlayer, player, uuid)
+    end
 end
 
 function PetManager.UnequipAllPets(player :Player)
@@ -129,6 +143,23 @@ function  PetManager.CreatePet(pet : string) : PetsConfig.PetInstance
     
 end
 
+function PetManager.GetEquippedPets()
+    local allEquippedPets = {}
+
+    for _, player in Players:GetPlayers() do
+        allEquippedPets[player.UserId] = {}
+
+        local profile = PlayerData.Profiles[player]
+        if not profile then continue end
+
+        local equippedPets = PetsConfig.GetEquippedPets(profile.Data)
+        for _, pet in equippedPets do
+            allEquippedPets[player.UserId][pet.UUID] = pet
+        end
+    end
+
+    return allEquippedPets
+end
 
 Remotes.DeletePets.OnServerEvent:Connect(PetManager.DeletePets)
 Remotes.DeletePet.OnServerEvent:Connect(PetManager.DeletePet)
@@ -137,5 +168,6 @@ Remotes.EquipBestPets.OnServerEvent:Connect(PetManager.EquipBestPets)
 Remotes.UnequipPet.OnServerEvent:Connect(PetManager.UnequipPet)
 Remotes.UnequipAllPets.OnServerEvent:Connect(PetManager.UnequipAllPets)
 
+Remotes.GetEquippedPets.OnServerInvoke = PetManager.GetEquippedPets
 
 return PetManager
