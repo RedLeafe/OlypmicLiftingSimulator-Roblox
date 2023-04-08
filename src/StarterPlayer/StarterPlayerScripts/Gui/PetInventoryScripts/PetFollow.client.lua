@@ -1,5 +1,6 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
 
 local Player = Players.LocalPlayer
 
@@ -97,6 +98,40 @@ local function PetFollow(player : Player, pet: PetsConfig.PetInstance)
 
     petModel.Name = pet.UUID
     petModel.Parent = petsFolder
+
+    local tweenInfo = TweenInfo.new(1)
+    local upTween = TweenService:Create(charAttachment, tweenInfo, {
+        Position = Vector3.new(charAttachment.Position.X, 1.5, charAttachment.Position.Z),
+        Orientation = Vector3.new(charAttachment.Orientation.X, charAttachment.Orientation.Y, - 5)
+    })
+    local downTween = TweenService:Create(charAttachment, tweenInfo, {
+        Position = Vector3.new(charAttachment.Position.X, 0, charAttachment.Position.Z),
+        Orientation = Vector3.new(charAttachment.Orientation.X, charAttachment.Orientation.Y, 5)
+    })
+    upTween.Completed:Connect(function()
+        downTween:Play()
+    end)
+    downTween.Completed:Connect(function()
+        upTween:Play()
+    end)
+
+    upTween:Play()
+end
+
+local function PetStopFollow(player : Player, uuid : string)
+    local pets = EquippedPets[tostring(player.UserId)]
+    if not pets then return end
+    pets[uuid] = nil
+
+    local character = player.Character
+    if not character then return end
+    
+    local petsFolder = character:FindFirstChild("Pets")
+    if not petsFolder then return end
+    local model = petsFolder:FindFirstChild(uuid)
+    if model then
+        model:Destroy()
+    end
 end
 
 local function InitalizePlayer(player: Player)
@@ -129,6 +164,13 @@ for _, player in Players:GetPlayers() do
     end)
     InitalizePlayer(player)
 end
+
+Remotes.UnequipPet.OnClientEvent:Connect(function(uuid)
+    PetStopFollow(Player, uuid)
+    
+end)
+Remotes.ReplicateEquipPet.OnClientEvent:Connect(PetFollow)
+Remotes.ReplicateUnequipPet.OnClientEvent:Connect(PetStopFollow)
 
 Players.PlayerAdded:Connect(function(player)
     player.CharacterAdded:Connect(function(character)
