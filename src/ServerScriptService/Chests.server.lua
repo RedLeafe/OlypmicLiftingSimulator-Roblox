@@ -16,8 +16,10 @@ local function CollectChest(player: Player, chest: Model)
     if not profile then return end
 
     local area = chest.Parent.Name
+    if area ~= "Spawn" then
     local isAreaUnlocked = AreasConfig.IsAreaUnlocked(profile.Data, (area.."Gate"))
     if not isAreaUnlocked then return end
+    end
     
     local playerCooldown = profile.Data.Chest[area]
     if playerCooldown and playerCooldown > os.time() then return end
@@ -30,6 +32,9 @@ local function CollectChest(player: Player, chest: Model)
         PlayerData.AdjustStrengthNoMult(player, reward)
     elseif currency == "Gems" then
         PlayerData.AdjustGems(player, reward)
+    elseif currency == "Group" then
+        PlayerData.AdjustStrengthNoMult(player, reward)
+        PlayerData.AdjustGems(player, (reward / 10))
     end
 
     profile.Data.Chest[area] = os.time() + cooldown
