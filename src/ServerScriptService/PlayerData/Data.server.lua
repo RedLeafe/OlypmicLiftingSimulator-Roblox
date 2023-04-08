@@ -80,6 +80,7 @@ local function LoadProfile(player: Player)
 	if player:IsDescendantOf(Players) == true then
 		Manager.Profiles[player] = profile
 		CreateLeaderstats(player)
+		Manager.ProfileLoaded:Fire(player, profile.Data)
 	else
 	--removes session lock for the profile meaning and saves the profile data for the last time this session 
 		profile:Release()

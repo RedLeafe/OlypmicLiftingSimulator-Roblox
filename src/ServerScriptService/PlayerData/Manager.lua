@@ -11,6 +11,8 @@ local Remotes = ReplicatedStorage.Remotes
 
 Manager.Profiles = {}
 
+Manager.ProfileLoaded = Instance.new("BindableEvent")
+
 --Controls the data management whenever strength is added client side
 --Making it serverWide and applying it to any clientSide Gui
 function Manager.AdjustStrength(player: Player, amount: number)

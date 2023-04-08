@@ -170,4 +170,14 @@ Remotes.UnequipAllPets.OnServerEvent:Connect(PetManager.UnequipAllPets)
 
 Remotes.GetEquippedPets.OnServerInvoke = PetManager.GetEquippedPets
 
+PlayerData.ProfileLoaded.Event:Connect(function(player : Player, data)
+    local equippedPets = PetsConfig.GetEquippedPets(data)
+    for uuid, pet in equippedPets do
+        for _, loopPlayer in Players:GetPlayers() do
+            if player == loopPlayer then continue end
+            Remotes.ReplicateUnequipPet:FireClient(loopPlayer, player, uuid)
+        end
+    end
+end)
+
 return PetManager
