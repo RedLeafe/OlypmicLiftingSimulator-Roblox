@@ -13,28 +13,38 @@ Manager.Profiles = {}
 
 Manager.ProfileLoaded = Instance.new("BindableEvent")
 
+local function GetSettingsByID(id:string)
+	for _, settingTable in pairs(Settings) do
+		if settingTable.ID == id then
+			return settingTable
+		end
+	end
+end
+
 --Controls the data management whenever strength is added client side
 --Making it serverWide and applying it to any clientSide Gui
 function Manager.AdjustStrength(player: Player, amount: number)
 	
 	local profile = Manager.Profiles[player]
+	local info = GetSettingsByID("Popup_Effects")
 	amount = amount * profile.Data.StrengthMultiplier
 	if not profile then return end
 	profile.Data.Strength += amount
 	player.leaderstats.Strength.Value = profile.Data.Strength
 	Remotes.UpdateStrength:FireClient(player, profile.Data.Strength)
-	Remotes.UpdateStrPopup:FireClient(player, amount)
+	if not info.Enabled then Remotes.UpdateStrPopup:FireClient(player, amount) end
 
 end
 --adjust the strength without the multiplier :)
 function Manager.AdjustStrengthNoMult(player: Player, amount: number)
 
 	local profile = Manager.Profiles[player]
+	local info = GetSettingsByID("Popup_Effects")
 	if not profile then return end
 	profile.Data.Strength += amount
 	player.leaderstats.Strength.Value = profile.Data.Strength
 	Remotes.UpdateStrength:FireClient(player, profile.Data.Strength)
-	Remotes.UpdateStrPopup:FireClient(player, amount)
+	if not info.Enabled then Remotes.UpdateStrPopup:FireClient(player, amount) end
 
 end
 
