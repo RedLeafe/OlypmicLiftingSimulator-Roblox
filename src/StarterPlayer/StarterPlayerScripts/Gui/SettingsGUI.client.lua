@@ -3,16 +3,17 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 local Settings = require(ReplicatedStorage:WaitForChild("Configs"):WaitForChild("SettingsConfig"))
-local player = Players.localPlayer
+local Player = Players.LocalPlayer
+local PlayerGui = Player.PlayerGui
 
 local ButtonGui = PlayerGui:WaitForChild("Left")
 local OpenButton = ButtonGui.Frame.Buttons.Settings
 
-local screenGUI = PlayerGui:WaitForChild("Settings")
-local frame = screenGUI.Frame
+local SettingsGUI = PlayerGui:WaitForChild("SettingsGUI")
+local frame = SettingsGUI.Frame
 
-local exitButton = frame.ExitButton --Might need to change
-local contianer = frame.Container.Container
+local exitButton = frame.ExitButton 
+local container = frame.Container.Container
 local template = container.Template
 
 local ONCOLOR = Color3.fromRGB(47, 214, 28)
@@ -41,9 +42,9 @@ end
     
 -- Open and Close Settings Menu
 OpenButton.MouseButton1Click:Connect(function()
-	RebirthGui.Enabled = not RebirthGui.Enabled
+	SettingsGUI.Enabled = not SettingsGUI.Enabled
 end)
 
-ExitButton.MouseButton1Click:Connect(function()
-	RebirthGui.Enabled = false
+exitButton.MouseButton1Click:Connect(function()
+	SettingsGUI.Enabled = false
 end)

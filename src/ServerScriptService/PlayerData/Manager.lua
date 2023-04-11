@@ -9,6 +9,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = ReplicatedStorage.Remotes
 
+local Settings = require(ReplicatedStorage:WaitForChild("Config"):WaitForChild("Settings"))
+
 Manager.Profiles = {}
 
 Manager.ProfileLoaded = Instance.new("BindableEvent")
