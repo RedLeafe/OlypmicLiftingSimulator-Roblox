@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
-local Codes = require(ReplicatedStorage:WaitForChild("Configs"):WaitForChild("CodesConfig"))
+local CodesConfig = require(ReplicatedStorage:WaitForChild("Configs"):WaitForChild("CodesConfig"))
 local Player = Players.LocalPlayer
 local PlayerGui = Player.PlayerGui
 
@@ -39,6 +39,8 @@ redeemButton.MouseButton1Click:Connect(function()
 		DisplayResult("Already Redeemed!", FAILCOLOR)
 	elseif result == "REDEEMED" then
 		DisplayResult("Redeemed!", SUCCESSCOLOR)
+	else 
+		DisplayResult("Erorr!", FAILCOLOR)
 	end
 end)
 
