@@ -4,10 +4,16 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local areaConfig = require(ReplicatedStorage.Configs.AreasConfig)
+local codesConfig = require(ReplicatedStorage.Configs.CodesConfig)
 
 local defaultAreas = {}
 for area, info in areaConfig.Config do 
 	defaultAreas[area] = false
+end
+
+local defaultCodes = {}
+for code, info in codesConfig.Config do 
+	defaultCodes[code] = false
 end
 
 local Template = {
@@ -21,7 +27,8 @@ local Template = {
 	Areas = defaultAreas,
 	Chest = { },
 	Pets = {},
-	Settings = {}
+	Settings = {},
+	Codes = defaultCodes
 }
 
 export type PlayerData = typeof(Template)

@@ -27,9 +27,9 @@ function Manager.AdjustStrength(player: Player, amount: number)
 	player.leaderstats.Strength.Value = profile.Data.Strength
 	Remotes.UpdateStrength:FireClient(player, profile.Data.Strength)
 	--print (info.Enabled)
-	if info.Enabled then 
+	--if info.Enabled then 
 		Remotes.UpdateStrPopup:FireClient(player, amount) 
-	end
+	--end
 
 end
 --adjust the strength without the multiplier :)
@@ -42,9 +42,9 @@ function Manager.AdjustStrengthNoMult(player: Player, amount: number)
 	player.leaderstats.Strength.Value = profile.Data.Strength
 	Remotes.UpdateStrength:FireClient(player, profile.Data.Strength)
 	--print (info.Enabled)
-	if info.Enabled then 
+	--if info.Enabled then 
 		Remotes.UpdateStrPopup:FireClient(player, amount) 
-	end
+	--end
 
 end
 

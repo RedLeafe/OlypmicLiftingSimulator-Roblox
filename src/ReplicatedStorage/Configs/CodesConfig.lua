@@ -1,6 +1,12 @@
-local module = {
+local CodesConfig = {}
+
+CodesConfig.Config = {
 	Test = 1000,
-	["1KLIKES"] = 10000
+	RELEASE = 10000
 }
 
-return module
+function CodesConfig.IsCodeUsed(data, code: string)
+	return data.Codes[code]
+end
+
+return CodesConfig
