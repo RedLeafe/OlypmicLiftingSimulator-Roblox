@@ -31,8 +31,11 @@ end
 
 redeemButton.MouseButton1Click:Connect(function()
 	print ("Sent Server Event")
+	DisplayResult("Erorr!", FAILCOLOR)
 	--local result = Remotes.RedeemCode:InvokeServer(textBox.Text)
-	local result = Remotes.RedeemCodes:FireServer(textBox.Text)
+	local result = Remotes.RedeemCode:InvokeServer(textBox.Text)
+	print (result)
+	--local result = Remotes.RedeemCodes:FireServer(textBox.Text)
 	if result == "DOES NOT EXIST" then
 		DisplayResult("Invalid Code!", FAILCOLOR)
 	elseif result == "ALREADY REDEEMED" then

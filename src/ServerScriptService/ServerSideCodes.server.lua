@@ -7,7 +7,8 @@ local Remotes = ReplicatedStorage.Remotes
 
 local Codes = {}
 
-function Codes.ProcessCodes(player: Player, code: string)
+Remotes.RedeemCode.OnServerInvoke = function(player, code)
+	--Codes.ProcessCodes(player: Player, code: string)
     print("Entered Function")
 	local profile = PlayerData.Profiles[player]
 	if not profile then return "No profile found!" end
@@ -19,13 +20,13 @@ function Codes.ProcessCodes(player: Player, code: string)
 	if isUnlocked then return "ALREADY REDEEMED" end
 	
 	profile.Data.Codes[code] = true
-    PlayerData.AdjustStrengthNoMult(player, CodesConfig[code])
+    PlayerData.AdjustStrengthNoMult(player, CodesConfig.Config[code])
 	return "REDEEMED"
 end
 	
-Remotes.RedeemCodes.OnServerEvent:Connect(function(player, code)
-    print ("Recieved Server Event")
-    Codes.ProcessCodes(player, code)
-end)
+--Remotes.RedeemCode.OnServerEvent:Connect(function(player, code)
+    --print ("Recieved Server Event")
+    --Codes.ProcessCodes(player, code)
+--end)
 
 return Codes
