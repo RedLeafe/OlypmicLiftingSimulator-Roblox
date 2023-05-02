@@ -24,14 +24,10 @@ local function DisplayResult(text: string, color: Color3)
 	resultText.Text = text
 	resultText.TextColor3 = color
 	resultText.Visible = true
-	task.delay(3, function()
-		resultText.Visible = false
-	end)
 end
 
 redeemButton.MouseButton1Click:Connect(function()
 	print ("Sent Server Event")
-	DisplayResult("Erorr!", FAILCOLOR)
 	--local result = Remotes.RedeemCode:InvokeServer(textBox.Text)
 	local result = Remotes.RedeemCode:InvokeServer(textBox.Text)
 	print (result)
@@ -49,6 +45,7 @@ end)
 
 -- Open and Close Settings Menu
 OpenButton.MouseButton1Click:Connect(function()
+	resultText.Visible = false
 	codesGUI.Enabled = not codesGUI.Enabled
 end)
 
