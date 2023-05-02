@@ -42,7 +42,7 @@ local function RegisterButtonClicked()
             elseif (gate.Name == "ArcticGate") then MarketplaceService:PromptProductPurchase(player, ArcticProductId)
             elseif (gate.Name == "VolcanoGate") then MarketplaceService:PromptProductPurchase(player, VolcanoProductId) end
             debounce = true
-            task.delay(0.5, function()
+            task.delay(0.2, function()
                 debounce = false
             end)
         end)

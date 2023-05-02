@@ -1,22 +1,44 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerScriptService = game:GetService("ServerScriptService")
+
+local PlayerData = require(ServerScriptService.PlayerData.Manager)
+local AreasConfig = require(ReplicatedStorage.Configs.AreasConfig)
 
 local Remotes = ReplicatedStorage.Remotes
+
+function UnlockAreaRobux(player: Player, area: string)
+	local profile = PlayerData.Profiles[player]
+	if not profile then return "No profile found!" end
+	
+	local areaInfo = AreasConfig.Config[area]
+	if not areaInfo then return "No Area found!" end
+	
+	local isUnlocked = AreasConfig.IsAreaUnlocked(profile.Data, area)
+	if isUnlocked then return "Already unlocked!" end
+
+	profile.Data.Areas[area] = true
+	Remotes.UpdateArea:FireClient(player, area)
+	return "Area unlocked!"
+end
 
 local productFunctions = {}
 
 -- ProductId 1507827865 unlocks the forest area
 productFunctions[1507827865] = function(receipt, player)
-    Remotes.PurchaseAreaRobux:FireServer("ForestGate")
+	--print("Purchased Forest Area")
+	UnlockAreaRobux(player, "ForestGate")
 end
 
 productFunctions[1524776508] = function(receipt, player)
-    Remotes.PurchaseAreaRobux:FireServer("ArcticGate")
+	--print("Purchased Arctic Area")
+	UnlockAreaRobux(player, "ArcticGate")
 end
 
 productFunctions[1524776586] = function(receipt, player)
-    Remotes.PurchaseAreaRobux:FireServer("VolcanoGate")
+	--print("Purchased Volcano Area")
+	UnlockAreaRobux(player, "VolcanoGate")
 end
 
 local function processReceipt(receiptInfo)

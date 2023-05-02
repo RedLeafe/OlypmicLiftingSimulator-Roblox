@@ -31,28 +31,9 @@ function Areas.UnlockArea(player: Player, area: string)
 	Remotes.UpdateArea:FireClient(player, area)
 	return "Area unlocked!"
 end
-
-function Areas.UnlockAreaRobux(player: Player, area: string)
-	local profile = PlayerData.Profiles[player]
-	if not profile then return "No profile found!" end
-	
-	local areaInfo = AreasConfig.Config[area]
-	if not areaInfo then return "No Area found!" end
-	
-	local isUnlocked = AreasConfig.IsAreaUnlocked(profile.Data, area)
-	if isUnlocked then return "Already unlocked!" end
-
-	profile.Data.Areas[area] = true
-	Remotes.UpdateArea:FireClient(player, area)
-	return "Area unlocked!"
-end
 	
 Remotes.PurchaseArea.OnServerEvent:Connect(function(player, area)
 	Areas.UnlockArea(player, area)
-end)
-
-Remotes.PurchaseAreaRobux.OnServerEvent:Connect(function(player, area)
-	Areas.UnlockAreaRobux(player, area)
 end)
 
 return Areas
