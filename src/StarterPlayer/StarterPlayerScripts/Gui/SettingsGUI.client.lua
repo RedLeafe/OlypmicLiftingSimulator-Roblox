@@ -5,6 +5,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 --local Manager = require(ServerScriptService.PlayerData.Manager)
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 local Settings = require(ReplicatedStorage:WaitForChild("Configs"):WaitForChild("SettingsConfig"))
+local StateManager = require(ReplicatedStorage.Client.StateManager)
 local Player = Players.LocalPlayer
 local PlayerGui = Player.PlayerGui
 
@@ -36,8 +37,10 @@ local function GenerateSetting(setting: table)
 
       
   clone.Button.MouseButton1Click:Connect(function()
+    
     setting.Enabled = not setting.Enabled
-    print(setting.Enabled)
+    print(setting)
+    Remotes.UpdateSettings:FireServer(setting)
     clone.Button.BackgroundColor3 = if setting.Enabled then ONCOLOR else OFFCOLOR
     clone.Shadow.BackgroundColor3 = if setting.Enabled then SHADOWONCOLOR else SHADOWOFFCOLOR
     clone.Button.Text = if setting.Enabled then "On" else "Off"
@@ -45,7 +48,7 @@ local function GenerateSetting(setting: table)
   end)
 end
 
-for _, settingTable in pairs(Settings) do
+for _, settingTable in pairs(StateManager.GetData().Settings) do
   GenerateSetting(settingTable)
 end
     

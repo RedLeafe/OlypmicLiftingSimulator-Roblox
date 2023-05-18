@@ -27,7 +27,12 @@ local Template = {
 	Areas = defaultAreas,
 	Chest = { },
 	Pets = {},
-	Settings = {},
+	Settings = {
+		Popup_Effects = {ID = "Popup_Effects", Description = "Disable the popup effects for lifting!", Enabled = true},
+		Music = {ID = "Music", Description = "111111", Enabled = true},
+		SFX = {ID = "SFX", Description = "222222", Enabled = true},
+		Trade_Request = {ID = "Trade_Request", Description = "333333", Enabled = true}
+	},
 	Codes = defaultCodes
 }
 
