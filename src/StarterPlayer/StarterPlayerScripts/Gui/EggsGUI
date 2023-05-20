@@ -1,0 +1,52 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player.PlayerGui
+
+local Remotes = ReplicatedStorage.Remotes.EggRemotes
+
+local EggsConfig = require(ReplicatedStorage.Configs.EggsConfig)
+local PetsConfig = require(ReplicatedStorage.Configs.Pets)
+local ViewportModel = require(ReplicatedStorage.Libs.ViewportModel)
+local StateManager = require(ReplicatedStorage.Client.StateManager)
+local FormatNumber = require(ReplicatedStorage.Libs.FormatNumber.Simple)
+
+local Gui = PlayerGui:WaitForChild("PetEggGui")
+local EggGui = Gui.EggBillboard
+
+local Info = EggGui.Info
+local Container = EggGui.Container
+local Buttons = EggGui.Buttons
+
+local Template = Container.Template
+
+local STRENGTH_CURRENCY_ICON = ""
+local ROBUX_CURRENCY_ICON = ""
+
+local eggModels = EggsConfig.GetEggModels()
+
+local function GetClosestEgg()
+    local character = Player.character
+    if not character then return end
+
+    local primaryPart = character.PrimaryPart
+    if not primaryPart then return end
+
+    for egg, model: Model in eggModels do
+        local part = model.PrimaryPart
+        local distanceBetween = (part.Position - primaryPart.Position).Magnitude
+        if distanceBetween <= 10 then return egg
+    end
+end
+
+RunService.Step:Connect(function()
+    local closestEgg = GetClosestEgg()
+    if closestEgg then
+        if closestEgg ~= selectedEgg then
+            --Display Gui
+        end
+    end
+end)
