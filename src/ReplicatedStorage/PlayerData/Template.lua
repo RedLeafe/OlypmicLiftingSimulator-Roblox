@@ -5,6 +5,15 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local areaConfig = require(ReplicatedStorage.Configs.AreasConfig)
 local codesConfig = require(ReplicatedStorage.Configs.CodesConfig)
+local EggConfig = require(ReplicatedStorage.Configs.EggsConfig)
+
+local DEFUALT_PETS_TO_DELETE = {}
+for egg, eggInfo in EggConfig.Config do
+	DEFUALT_PETS_TO_DELETE[egg] = {}
+	for pet, petInfo in eggInfo.Pets do
+		DEFUALT_PETS_TO_DELETE[egg][pet] = false
+	end
+end
 
 local defaultAreas = {}
 for area, info in areaConfig.Config do 
@@ -27,6 +36,7 @@ local Template = {
 	Areas = defaultAreas,
 	Chest = { },
 	Pets = {},
+	AutoDeletePets = DEFUALT_PETS_TO_DELETE,
 	Settings = {
 		Popup_Effects = {ID = "Popup_Effects", Description = "Disable the popup effects for lifting!", Enabled = true},
 		Music = {ID = "Music", Description = "111111", Enabled = true},
